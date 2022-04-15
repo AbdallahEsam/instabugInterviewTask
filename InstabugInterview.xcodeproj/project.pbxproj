@@ -19,6 +19,21 @@
 		24AA93CD25AF0F0D007588C7 /* InstabugNetworkClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24AA93B825AF0F0D007588C7 /* InstabugNetworkClient.framework */; };
 		24AA93CE25AF0F0D007588C7 /* InstabugNetworkClient.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 24AA93B825AF0F0D007588C7 /* InstabugNetworkClient.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		24AA93D925AF0F24007588C7 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AA93D825AF0F24007588C7 /* NetworkClient.swift */; };
+		E24C31D928090E9A00539CA3 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E24C31D728090E9A00539CA3 /* Model.xcdatamodeld */; };
+		E24C31DA28090E9A00539CA3 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E24C31D728090E9A00539CA3 /* Model.xcdatamodeld */; };
+		E24C31DC28090FB700539CA3 /* TODO File.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24C31DB28090FB700539CA3 /* TODO File.swift */; };
+		E24C31DD28090FB700539CA3 /* TODO File.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24C31DB28090FB700539CA3 /* TODO File.swift */; };
+		E24C31E02809637400539CA3 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24C31DF2809637400539CA3 /* StorageManager.swift */; };
+		E24C31E12809637400539CA3 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24C31DF2809637400539CA3 /* StorageManager.swift */; };
+		E24C31E42809C7BE00539CA3 /* Record+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24C31E22809C7BE00539CA3 /* Record+CoreDataClass.swift */; };
+		E24C31E52809C7BE00539CA3 /* Record+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24C31E22809C7BE00539CA3 /* Record+CoreDataClass.swift */; };
+		E24C31E62809C7BE00539CA3 /* Record+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24C31E32809C7BE00539CA3 /* Record+CoreDataProperties.swift */; };
+		E24C31E72809C7BE00539CA3 /* Record+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24C31E32809C7BE00539CA3 /* Record+CoreDataProperties.swift */; };
+		E24C31EA2809C92500539CA3 /* RecordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24C31E92809C92500539CA3 /* RecordModel.swift */; };
+		E24C31EB2809C92500539CA3 /* RecordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24C31E92809C92500539CA3 /* RecordModel.swift */; };
+		E24C31ED2809DDAB00539CA3 /* RequestRecordBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24C31EC2809DDAB00539CA3 /* RequestRecordBuilder.swift */; };
+		E24C31EE2809DDAB00539CA3 /* RequestRecordBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24C31EC2809DDAB00539CA3 /* RequestRecordBuilder.swift */; };
+		E24C31F7280A138D00539CA3 /* NetworkFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24C31F5280A138D00539CA3 /* NetworkFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +90,14 @@
 		24AA93C725AF0F0D007588C7 /* InstabugNetworkClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstabugNetworkClientTests.swift; sourceTree = "<group>"; };
 		24AA93C925AF0F0D007588C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		24AA93D825AF0F24007588C7 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
+		E24C31D828090E9A00539CA3 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		E24C31DB28090FB700539CA3 /* TODO File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TODO File.swift"; sourceTree = "<group>"; };
+		E24C31DF2809637400539CA3 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		E24C31E22809C7BE00539CA3 /* Record+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Record+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E24C31E32809C7BE00539CA3 /* Record+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Record+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E24C31E92809C92500539CA3 /* RecordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordModel.swift; sourceTree = "<group>"; };
+		E24C31EC2809DDAB00539CA3 /* RequestRecordBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestRecordBuilder.swift; sourceTree = "<group>"; };
+		E24C31F5280A138D00539CA3 /* NetworkFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +157,7 @@
 				24AA93A725AF0DA5007588C7 /* Assets.xcassets */,
 				24AA93A925AF0DA5007588C7 /* LaunchScreen.storyboard */,
 				24AA93AC25AF0DA5007588C7 /* Info.plist */,
+				E24C31DB28090FB700539CA3 /* TODO File.swift */,
 			);
 			path = InstabugInterview;
 			sourceTree = "<group>";
@@ -141,9 +165,13 @@
 		24AA93B925AF0F0D007588C7 /* InstabugNetworkClient */ = {
 			isa = PBXGroup;
 			children = (
+				E24C31E82809C7DE00539CA3 /* Model */,
+				E24C31DE2809636500539CA3 /* Storage */,
 				24AA93BA25AF0F0D007588C7 /* InstabugNetworkClient.h */,
 				24AA93BB25AF0F0D007588C7 /* Info.plist */,
 				24AA93D825AF0F24007588C7 /* NetworkClient.swift */,
+				E24C31F5280A138D00539CA3 /* NetworkFactory.swift */,
+				E24C31D728090E9A00539CA3 /* Model.xcdatamodeld */,
 			);
 			path = InstabugNetworkClient;
 			sourceTree = "<group>";
@@ -155,6 +183,25 @@
 				24AA93C925AF0F0D007588C7 /* Info.plist */,
 			);
 			path = InstabugNetworkClientTests;
+			sourceTree = "<group>";
+		};
+		E24C31DE2809636500539CA3 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				E24C31DF2809637400539CA3 /* StorageManager.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		E24C31E82809C7DE00539CA3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E24C31E22809C7BE00539CA3 /* Record+CoreDataClass.swift */,
+				E24C31E32809C7BE00539CA3 /* Record+CoreDataProperties.swift */,
+				E24C31E92809C92500539CA3 /* RecordModel.swift */,
+				E24C31EC2809DDAB00539CA3 /* RequestRecordBuilder.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -303,7 +350,14 @@
 			files = (
 				24AA93A325AF0DA4007588C7 /* ViewController.swift in Sources */,
 				24AA939F25AF0DA4007588C7 /* AppDelegate.swift in Sources */,
+				E24C31EA2809C92500539CA3 /* RecordModel.swift in Sources */,
 				24AA93A125AF0DA4007588C7 /* SceneDelegate.swift in Sources */,
+				E24C31E42809C7BE00539CA3 /* Record+CoreDataClass.swift in Sources */,
+				E24C31E62809C7BE00539CA3 /* Record+CoreDataProperties.swift in Sources */,
+				E24C31ED2809DDAB00539CA3 /* RequestRecordBuilder.swift in Sources */,
+				E24C31E02809637400539CA3 /* StorageManager.swift in Sources */,
+				E24C31DC28090FB700539CA3 /* TODO File.swift in Sources */,
+				E24C31D928090E9A00539CA3 /* Model.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,7 +365,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E24C31DD28090FB700539CA3 /* TODO File.swift in Sources */,
 				24AA93D925AF0F24007588C7 /* NetworkClient.swift in Sources */,
+				E24C31DA28090E9A00539CA3 /* Model.xcdatamodeld in Sources */,
+				E24C31F7280A138D00539CA3 /* NetworkFactory.swift in Sources */,
+				E24C31E52809C7BE00539CA3 /* Record+CoreDataClass.swift in Sources */,
+				E24C31EB2809C92500539CA3 /* RecordModel.swift in Sources */,
+				E24C31E72809C7BE00539CA3 /* Record+CoreDataProperties.swift in Sources */,
+				E24C31EE2809DDAB00539CA3 /* RequestRecordBuilder.swift in Sources */,
+				E24C31E12809637400539CA3 /* StorageManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -650,6 +712,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		E24C31D728090E9A00539CA3 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E24C31D828090E9A00539CA3 /* Model.xcdatamodel */,
+			);
+			currentVersion = E24C31D828090E9A00539CA3 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 24AA939325AF0DA4007588C7 /* Project object */;
 }

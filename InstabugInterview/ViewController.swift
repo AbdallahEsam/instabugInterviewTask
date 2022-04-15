@@ -10,10 +10,22 @@ import InstabugNetworkClient
 
 class ViewController: UIViewController {
 
+     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+
+
+        let network = NetworkFactory.getNetwok()
+        
+        network.get(.init(string: "https://httpbin.org")!) {  [weak self] data in
+            print(data)
+        }
+
     }
+    
+    
+   
 
 
 }
