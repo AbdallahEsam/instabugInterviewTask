@@ -9,89 +9,114 @@ import UIKit
 import CoreData
 
 public protocol StorageManagerProtocol {
-    func fetchRecords()
     func resetAllRecords()
     func saveRecord(with record: RecordModel)
 }
 
-public final class StorageManager{
+public final class StorageManager: StorageManagerProtocol {
+    enum Defaults {
+        static let maxCount = 1000
+    }
     
-    static let shared = StorageManager()
+    public static let shared = StorageManager()
+    
+    private init() {}
     
     private let name: String = "Model"
-    private let maxCount: Int = 5
-    private var items: [NSManagedObject] = []
     
     private let rootQueue: DispatchQueue = DispatchQueue(label: "com.instabug.session.rootQueue", qos: .background)
-    public lazy var persistentContainer: NSPersistentContainer = {
+    private lazy var persistentContainer: NSPersistentContainer = {
         
         let container = NSPersistentContainer(name: name)
         container.loadPersistentStores { storeDescription, error in
             if let error = error {
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                
+                print(error)
             }
         }
         return container
     }()
     
-    private var count: Int {
-        let context = persistentContainer.viewContext
-        do {
-            let count = try context.count(for: NSFetchRequest(entityName: "Record"))
-            return count
+    func performOnRootQueue(_ completion: (NSManagedObjectContext) -> Void) {
+        rootQueue.sync{
+            completion(persistentContainer.viewContext)
         }
-        catch {
-            let nserror = error as NSError
-            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+    }
+}
+
+// MARK: - Save Record
+//
+extension StorageManager {
+    
+    public func saveRecord(with record: RecordModel) {
+        performPreRecordInsertion {
+            self.saveRecord(record, on: persistentContainer.viewContext)
         }
     }
     
-    private func saveContext(record: RecordModel) {
-        rootQueue.sync {
-            let newItem = Record(context: persistentContainer.viewContext)
-            newItem.createAt = record.creationDate
-            newItem.errorDomain = record.errorDomain
-            newItem.method = record.method
-            newItem.requestPayload = record.requestPayload
-            newItem.responsePayload = record.responsePayload
-            newItem.statusCode = Int64(record.statusCode ?? 200)
-            newItem.url = record.url
-            items.append(newItem)
-            let context = persistentContainer.viewContext
-            if context.hasChanges {
-                do {
-                    try context.save()
-                }
-                catch {
-                    let nserror = error as NSError
-                    fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-                }
+    private func createRecordFromModel(_ viewContext: NSManagedObjectContext, _ record: RecordModel) {
+        let newItem = Record(context: viewContext)
+        newItem.createAt = record.creationDate
+        newItem.errorDomain = record.errorDomain
+        newItem.method = record.method
+        newItem.requestPayload = record.requestPayload
+        newItem.responsePayload = record.responsePayload
+        newItem.statusCode = Int64(record.statusCode ?? 200)
+        newItem.url = record.url
+    }
+    
+    private func saveRecord(_ record: RecordModel, on viewContext: NSManagedObjectContext) {
+        createRecordFromModel(viewContext, record)
+        if viewContext.hasChanges {
+            do {
+                try viewContext.save()
+            }
+            catch {
+                print(error)
             }
         }
     }
     
-    private func validateIsNewItemCanBeSaved() -> Bool {
-        if count == maxCount{
-            return false
-        }else{
+    func performPreRecordInsertion(_ completion: () -> Void) {
+        performOnRootQueue { viewContext in
+            do {
+                let count = try viewContext.count(for: Record.fetchRequest())
+                guard count < Defaults.maxCount else {
+                    self.deleteFirstItem { _ in completion() }
+                    return
+                }
+                
+                completion()
+            } catch {
+                
+            }
             
-            return true
         }
     }
     
-    private func deleteFirstItem() {
-        rootQueue.sync {
-            let context = persistentContainer.viewContext
-            let item = items[0]
-            context.delete(item)
-            items.removeFirst()
+    private func deleteFirstItem(_ completion: (Error?) -> Void) {
+        let request = Record.fetchRequest()
+        request.fetchLimit = 1
+        
+        let context = persistentContainer.viewContext
+        do {
+            let items = try context.fetch(request) as [NSManagedObject]
+            if let firstItem = items.first {
+                if let item = firstItem as? Record {
+                    print(item.statusCode)
+                }
+                context.delete(firstItem)
+            }
+            
+            completion(nil)
+        } catch {
+            completion(error)
         }
     }
-    
 }
 
-extension StorageManager: StorageManagerProtocol {
+// MARK: - Reset All Records
+extension StorageManager {
     public func resetAllRecords() {
         rootQueue.sync {
             let storeContainer =
@@ -126,31 +151,27 @@ extension StorageManager: StorageManagerProtocol {
         }
     }
     
-    public func fetchRecords() {
+}
+
+// MARK: - Fetch All records
+extension StorageManager {
+    
+    public func fetchRecords(compeletion: @escaping (Result<[Record], Error>) -> Void) {
         rootQueue.async {
             do {
+                
                 let items = try self.persistentContainer.viewContext.fetch(Record.fetchRequest())
-                self.items = items
-                print(self.items)
+                DispatchQueue.main.async {
+                    compeletion(.success(items))
+                }
             }
             catch {
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                DispatchQueue.main.async {
+                    compeletion(.failure(error))
+                }
             }
         }
     }
-    
-    public func saveRecord(with record: RecordModel){
-       
-            if validateIsNewItemCanBeSaved(){
-                saveContext(record: record)
-            }else{
-                deleteFirstItem()
-                saveContext(record: record)
-            }
-            
-    }
-    
-    
-    
 }
+
+

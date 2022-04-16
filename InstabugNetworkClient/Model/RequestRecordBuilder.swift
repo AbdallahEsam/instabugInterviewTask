@@ -13,7 +13,7 @@ class RequestRecordBuilder {
     private var statusCode: Int?
     private var resposePayload: String?
     private var errorDomain: String?
-    
+    init(){}
     init(_ request: URLRequest) {
         self.request = request
         self.setRequestPayload(request)
@@ -30,7 +30,7 @@ class RequestRecordBuilder {
       }
       
       guard data.count <= Constants.maxPayloadSize else {
-        return "Payload too large"
+          return Constants.tooLargePayload
       }
       
       return String(data: data, encoding: .utf8) ?? String()
@@ -63,5 +63,6 @@ class RequestRecordBuilder {
 extension RequestRecordBuilder{
     enum Constants {
         static let maxPayloadSize = 1024 * 1024
+        static let tooLargePayload = "Payload too large"
     }
 }

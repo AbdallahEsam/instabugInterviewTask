@@ -20,33 +20,51 @@ public class NetworkClient {
         self.storageManager = storageManager
     }
     
+    public convenience init() {
+        self.init(storageManager: StorageManager.shared)
+    }
+    
     // MARK: Network requests
     private func executeRequest(_ url: URL, method: String, payload: Data?, completionHandler: @escaping (Data?) -> Void) {
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = method
         urlRequest.httpBody = payload
-        let requestRecordBuilder: RequestRecordBuilder = .init(urlRequest)
-        URLSession.shared.dataTask(with: urlRequest) { data, response, error in
-            requestRecordBuilder.setResponsePayload(data)
-            requestRecordBuilder.setErrorDomain(error)
-            if let httpResponse = response as? HTTPURLResponse {
-                let statusCode = httpResponse.statusCode
-                print("statusCode: \(statusCode)")
-                requestRecordBuilder.setStatusCode(statusCode)
-            }
-
-            let requestRecord = requestRecordBuilder.build()
-            self.storageManager.saveRecord(with: requestRecord)
-            print(requestRecord)
+        URLSession.shared.dataTask(with: urlRequest) { [weak self] data, response, error in
+            guard let self = self else { return }
+            let response = Response(response: response, data: data, error: error)
+            self.saveRequest(urlRequest, response)
             DispatchQueue.main.async {
                 completionHandler(data)
             }
         }.resume()
     }
+    
+    private func saveRequest(_ request: URLRequest, _ response: Response) {
+        let recordBuilder = RequestRecordBuilder(request)
+        recordBuilder.setResponsePayload(response.data)
+        recordBuilder.setErrorDomain(response.error)
+        if let httpResponse = response.response as? HTTPURLResponse {
+            let statusCode = httpResponse.statusCode
+            recordBuilder.setStatusCode(statusCode)
+        }
+
+        let requestRecord = recordBuilder.build()
+        self.storageManager.saveRecord(with: requestRecord)
+    }
 
     // MARK: Network recording
     public func allNetworkRequests() -> Any {
         fatalError("Not implemented")
+    }
+}
+
+// MARK: - Nested Types
+//
+extension NetworkClient {
+    struct Response {
+        let response: URLResponse?
+        let data: Data?
+        let error: Error?
     }
 }
 

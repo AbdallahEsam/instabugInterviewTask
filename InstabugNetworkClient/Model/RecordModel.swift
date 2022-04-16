@@ -8,6 +8,16 @@
 import Foundation
 
 public struct RecordModel {
+    public init(creationDate: Date?, method: String?, url: String?, statusCode: Int?, requestPayload: String?, responsePayload: String?, errorDomain: String?) {
+        self.creationDate = creationDate
+        self.method = method
+        self.url = url
+        self.statusCode = statusCode
+        self.requestPayload = requestPayload
+        self.responsePayload = responsePayload
+        self.errorDomain = errorDomain
+    }
+    
   
     
   /// Request Creation Date
