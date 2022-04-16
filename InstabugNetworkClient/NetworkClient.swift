@@ -7,21 +7,23 @@
 
 import Foundation
 public protocol NetworkClientProtocol {
-    func get(_ url: URL, completionHandler: @escaping (Data?) -> Void)
+    func getRequest(_ url: URL, completionHandler: @escaping (Data?) -> Void)
     func post(_ url: URL, payload: Data?, completionHandler: @escaping (Data?) -> Void)
     func put(_ url: URL, payload: Data?, completionHandler: @escaping (Data?) -> Void)
     func delete(_ url: URL, completionHandler: @escaping (Data?) -> Void)
+    func allNetworkRecords(onCompletion: @escaping(Result<[Record], Error>) -> Void)
 }
 
 public class NetworkClient {
     private let storageManager: StorageManagerProtocol
-    
-    init(storageManager: StorageManagerProtocol) {
+    private var urlSession: URLSession
+    init(storageManager: StorageManagerProtocol, urlSession: URLSession) {
         self.storageManager = storageManager
+        self.urlSession = urlSession
     }
     
     public convenience init() {
-        self.init(storageManager: StorageManager.shared)
+        self.init(storageManager: StorageManager.shared, urlSession: URLSession.shared)
     }
     
     // MARK: Network requests
@@ -29,7 +31,8 @@ public class NetworkClient {
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = method
         urlRequest.httpBody = payload
-        URLSession.shared.dataTask(with: urlRequest) { [weak self] data, response, error in
+        
+        urlSession.dataTask(with: urlRequest) { [weak self] data, response, error in
             guard let self = self else { return }
             let response = Response(response: response, data: data, error: error)
             self.saveRequest(urlRequest, response)
@@ -39,6 +42,7 @@ public class NetworkClient {
         }.resume()
     }
     
+    // MARK: Save Request
     private func saveRequest(_ request: URLRequest, _ response: Response) {
         let recordBuilder = RequestRecordBuilder(request)
         recordBuilder.setResponsePayload(response.data)
@@ -53,8 +57,17 @@ public class NetworkClient {
     }
 
     // MARK: Network recording
+    /// - Note: Should not be used as the response happens asynchronously.
+    ///
+    @available(*, unavailable, renamed: "allNetworkRecords(onCompletion:)")
     public func allNetworkRequests() -> Any {
-        fatalError("Not implemented")
+      fatalError("Not implemented")
+    }
+    
+    /// Fetch all netwwork records
+    ///
+    public func allNetworkRecords(onCompletion: @escaping(Result<[Record], Error>) -> Void) {
+        storageManager.fetchRecords(compeletion: onCompletion)
     }
 }
 
@@ -69,7 +82,7 @@ extension NetworkClient {
 }
 
 extension NetworkClient: NetworkClientProtocol {
-    public func get(_ url: URL, completionHandler: @escaping (Data?) -> Void) {
+    public func getRequest(_ url: URL, completionHandler: @escaping (Data?) -> Void) {
         executeRequest(url, method: "GET", payload: nil, completionHandler: completionHandler)
     }
     

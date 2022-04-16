@@ -22,18 +22,14 @@ class RequestRecordBuilderTest: XCTestCase {
     
     func testRequestRecordBuilderTest_whenRequestPayloadIsLarge_willBuildRecordrRequestPayloadWithTooLarge(){
         sut = .init(RequestStub.RequestDataWithLargePayload())
-        
         let record = sut.build()
-        
         XCTAssertEqual(record.requestPayload, RequestRecordBuilder.Constants.tooLargePayload)
     }
     
     func testRequestRecordBuilderTest_whenResponsePayloadIsLarge_willBuildRecordrResponsePayloadWithTooLarge(){
         sut = .init(RequestStub.RequestDataWithSmallPayload())
-        
         sut.setResponsePayload(ResposeStub.ResponseDataWithLargePayload().data)
         let record = sut.build()
-        
         XCTAssertEqual(record.responsePayload, RequestRecordBuilder.Constants.tooLargePayload)
     }
   

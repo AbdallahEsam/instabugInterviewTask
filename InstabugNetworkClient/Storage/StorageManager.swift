@@ -11,6 +11,7 @@ import CoreData
 public protocol StorageManagerProtocol {
     func resetAllRecords()
     func saveRecord(with record: RecordModel)
+    func fetchRecords(compeletion: @escaping (Result<[Record], Error>) -> Void)
 }
 
 public final class StorageManager: StorageManagerProtocol {
@@ -157,7 +158,8 @@ extension StorageManager {
 extension StorageManager {
     
     public func fetchRecords(compeletion: @escaping (Result<[Record], Error>) -> Void) {
-        rootQueue.async {
+        rootQueue.async { [weak self] in
+            guard let self = self else{return}
             do {
                 
                 let items = try self.persistentContainer.viewContext.fetch(Record.fetchRequest())

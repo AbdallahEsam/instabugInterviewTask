@@ -10,10 +10,16 @@ import InstabugNetworkClient
 
 class ViewController: UIViewController {
 
+    var repo: AppRepoProtocol!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+            
+        
+        repo = AppRepo()
+        repo.get { [weak self] data in
+            print(data)
+        }
     }
     
 
