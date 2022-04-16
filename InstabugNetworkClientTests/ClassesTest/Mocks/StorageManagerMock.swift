@@ -20,9 +20,10 @@ class StorageManagerMock: StorageManagerProtocol {
         isResetAllRecordsCalled = true
     }
     
-    func saveRecord(with record: RecordModel) {
+    func saveRecord(with record: RecordModel, compeletion: @escaping (Result<Record, Error>) -> Void) {
         isSaveRecordCalled = true
     }
+    
     
     func fetchRecords(compeletion: @escaping (Result<[Record], Error>) -> Void) {
         isFetchRecordsCalled = true

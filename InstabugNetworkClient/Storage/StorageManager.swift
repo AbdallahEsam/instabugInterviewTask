@@ -10,37 +10,31 @@ import CoreData
 
 public protocol StorageManagerProtocol {
     func resetAllRecords()
-    func saveRecord(with record: RecordModel)
+    func saveRecord(with record: RecordModel, compeletion: @escaping (Result<Record, Error>) -> Void)
     func fetchRecords(compeletion: @escaping (Result<[Record], Error>) -> Void)
 }
 
 public final class StorageManager: StorageManagerProtocol {
-    enum Defaults {
-        static let maxCount = 1000
-    }
     
     public static let shared = StorageManager()
+    private let mainContext: NSManagedObjectContext
+    private let maxCount: Int
+    init(mainContext: NSManagedObjectContext, maxCount: Int) {
+        self.mainContext = mainContext
+        self.maxCount = maxCount
+    }
     
-    private init() {}
+    private convenience init() {
+        self.init(mainContext: CoreDataStack.shared.mainContext, maxCount: Defaults.maxCount)
+    }
     
-    private let name: String = "Model"
     
     private let rootQueue: DispatchQueue = DispatchQueue(label: "com.instabug.session.rootQueue", qos: .background)
-    private lazy var persistentContainer: NSPersistentContainer = {
-        
-        let container = NSPersistentContainer(name: name)
-        container.loadPersistentStores { storeDescription, error in
-            if let error = error {
-                
-                print(error)
-            }
-        }
-        return container
-    }()
+    
     
     func performOnRootQueue(_ completion: (NSManagedObjectContext) -> Void) {
         rootQueue.sync{
-            completion(persistentContainer.viewContext)
+            completion(mainContext)
         }
     }
 }
@@ -49,13 +43,13 @@ public final class StorageManager: StorageManagerProtocol {
 //
 extension StorageManager {
     
-    public func saveRecord(with record: RecordModel) {
+    public func saveRecord(with record: RecordModel, compeletion: @escaping (Result<Record, Error>) -> Void) {
         performPreRecordInsertion {
-            self.saveRecord(record, on: persistentContainer.viewContext)
+            self.saveRecord(record, on: mainContext, compeletion: compeletion)
         }
     }
     
-    private func createRecordFromModel(_ viewContext: NSManagedObjectContext, _ record: RecordModel) {
+    private func createRecordFromModel(_ viewContext: NSManagedObjectContext, _ record: RecordModel, compeletion: @escaping (Result<Record, Error>) -> Void) {
         let newItem = Record(context: viewContext)
         newItem.createAt = record.creationDate
         newItem.errorDomain = record.errorDomain
@@ -64,16 +58,18 @@ extension StorageManager {
         newItem.responsePayload = record.responsePayload
         newItem.statusCode = Int64(record.statusCode ?? 200)
         newItem.url = record.url
+        compeletion(.success(newItem))
     }
     
-    private func saveRecord(_ record: RecordModel, on viewContext: NSManagedObjectContext) {
-        createRecordFromModel(viewContext, record)
+    private func saveRecord(_ record: RecordModel, on viewContext: NSManagedObjectContext, compeletion: @escaping (Result<Record, Error>) -> Void) {
+        createRecordFromModel(viewContext, record, compeletion: compeletion)
         if viewContext.hasChanges {
             do {
                 try viewContext.save()
             }
             catch {
                 print(error)
+                compeletion(.failure(error))
             }
         }
     }
@@ -82,7 +78,7 @@ extension StorageManager {
         performOnRootQueue { viewContext in
             do {
                 let count = try viewContext.count(for: Record.fetchRequest())
-                guard count < Defaults.maxCount else {
+                guard count < maxCount else {
                     self.deleteFirstItem { _ in completion() }
                     return
                 }
@@ -99,14 +95,13 @@ extension StorageManager {
         let request = Record.fetchRequest()
         request.fetchLimit = 1
         
-        let context = persistentContainer.viewContext
         do {
-            let items = try context.fetch(request) as [NSManagedObject]
+            let items = try mainContext.fetch(request) as [NSManagedObject]
             if let firstItem = items.first {
                 if let item = firstItem as? Record {
                     print(item.statusCode)
                 }
-                context.delete(firstItem)
+                mainContext.delete(firstItem)
             }
             
             completion(nil)
@@ -121,7 +116,7 @@ extension StorageManager {
     public func resetAllRecords() {
         rootQueue.sync {
             let storeContainer =
-            persistentContainer.persistentStoreCoordinator
+            CoreDataStack.shared.persistentContainer.persistentStoreCoordinator
             
             // Delete each existing persistent store
             for store in storeContainer.persistentStores {
@@ -138,14 +133,14 @@ extension StorageManager {
             }
             
             // Re-create the persistent container
-            persistentContainer = NSPersistentContainer(
-                name: name // the name of
+            CoreDataStack.shared.persistentContainer = NSPersistentContainer(
+                name: Defaults.coreDataName // the name of
                 // a .xcdatamodeld file
             )
             
             // Calling loadPersistentStores will re-create the
             // persistent stores
-            persistentContainer.loadPersistentStores {
+            CoreDataStack.shared.persistentContainer.loadPersistentStores {
                 (store, error) in
                 // Handle errors
             }
@@ -162,7 +157,7 @@ extension StorageManager {
             guard let self = self else{return}
             do {
                 
-                let items = try self.persistentContainer.viewContext.fetch(Record.fetchRequest())
+                let items = try self.mainContext.fetch(Record.fetchRequest())
                 DispatchQueue.main.async {
                     compeletion(.success(items))
                 }
@@ -177,3 +172,12 @@ extension StorageManager {
 }
 
 
+
+// MARK: - Defaults
+extension StorageManager {
+    enum Defaults {
+        static let maxCount = 1000
+        static let coreDataName = "Model"
+    }
+    
+}

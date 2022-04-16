@@ -53,7 +53,7 @@ public class NetworkClient {
         }
 
         let requestRecord = recordBuilder.build()
-        self.storageManager.saveRecord(with: requestRecord)
+        self.storageManager.saveRecord(with: requestRecord) { _ in}
     }
 
     // MARK: Network recording
