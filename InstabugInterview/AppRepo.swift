@@ -24,6 +24,6 @@ class AppRepo {
 
 extension AppRepo: AppRepoProtocol {
     func get(completionHandler: @escaping (Data?) -> Void) {
-        network.getRequest(URL(string: Constant.url)!, completionHandler: completionHandler)
+        network.get(URL(string: Constant.url)!, completionHandler: completionHandler)
     }
 }

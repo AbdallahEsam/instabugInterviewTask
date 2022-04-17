@@ -17,24 +17,41 @@ public protocol StorageManagerProtocol {
 public final class StorageManager: StorageManagerProtocol {
     
     public static let shared = StorageManager()
-    private let mainContext: NSManagedObjectContext
+    private let type: String
     private let maxCount: Int
-    init(mainContext: NSManagedObjectContext, maxCount: Int) {
-        self.mainContext = mainContext
+    
+    init(type: StorageManager.MemoryStorageType, maxCount: Int) {
+        self.type = type.value
         self.maxCount = maxCount
     }
     
+    private lazy var persistentContainer: NSPersistentContainer = {
+           
+        let container = NSPersistentContainer(name: Defaults.coreDataName)
+        let description = container.persistentStoreDescriptions.first
+        description?.type = type
+           container.loadPersistentStores { storeDescription, error in
+               if let error = error {
+                   let nserror = error as NSError
+                   fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                   
+               }
+           }
+           return container
+       }()
+
     private convenience init() {
-        self.init(mainContext: CoreDataStack.shared.mainContext, maxCount: Defaults.maxCount)
+        self.init(type: .disk, maxCount: Defaults.maxCount)
     }
     
     
     private let rootQueue: DispatchQueue = DispatchQueue(label: "com.instabug.session.rootQueue", qos: .background)
     
     
-    func performOnRootQueue(_ completion: (NSManagedObjectContext) -> Void) {
-        rootQueue.sync{
-            completion(mainContext)
+     func performOnRootQueue(_ completion: (NSManagedObjectContext) -> Void) {
+    
+         rootQueue.sync{
+             completion(persistentContainer.viewContext)
         }
     }
 }
@@ -44,8 +61,8 @@ public final class StorageManager: StorageManagerProtocol {
 extension StorageManager {
     
     public func saveRecord(with record: RecordModel, compeletion: @escaping (Result<Record, Error>) -> Void) {
-        performPreRecordInsertion {
-            self.saveRecord(record, on: mainContext, compeletion: compeletion)
+        performPreInsertionRecord {
+            self.saveRecord(record, on: persistentContainer.viewContext, compeletion: compeletion)
         }
     }
     
@@ -74,7 +91,7 @@ extension StorageManager {
         }
     }
     
-    func performPreRecordInsertion(_ completion: () -> Void) {
+    func performPreInsertionRecord(_ completion: () -> Void) {
         performOnRootQueue { viewContext in
             do {
                 let count = try viewContext.count(for: Record.fetchRequest())
@@ -85,7 +102,7 @@ extension StorageManager {
                 
                 completion()
             } catch {
-                
+                fatalError(error.localizedDescription)
             }
             
         }
@@ -96,12 +113,12 @@ extension StorageManager {
         request.fetchLimit = 1
         
         do {
-            let items = try mainContext.fetch(request) as [NSManagedObject]
+            let items = try persistentContainer.viewContext.fetch(request) as [NSManagedObject]
             if let firstItem = items.first {
                 if let item = firstItem as? Record {
                     print(item.statusCode)
                 }
-                mainContext.delete(firstItem)
+                persistentContainer.viewContext.delete(firstItem)
             }
             
             completion(nil)
@@ -157,7 +174,7 @@ extension StorageManager {
             guard let self = self else{return}
             do {
                 
-                let items = try self.mainContext.fetch(Record.fetchRequest())
+                let items = try self.persistentContainer.viewContext.fetch(Record.fetchRequest())
                 DispatchQueue.main.async {
                     compeletion(.success(items))
                 }
@@ -178,6 +195,21 @@ extension StorageManager {
     enum Defaults {
         static let maxCount = 1000
         static let coreDataName = "Model"
+    }
+    
+    enum MemoryStorageType {
+        case memory
+        case disk
+        
+        var value: String {
+            switch self {
+                
+            case .memory:
+                return NSInMemoryStoreType
+            case .disk:
+                return NSSQLiteStoreType
+            }
+        }
     }
     
 }

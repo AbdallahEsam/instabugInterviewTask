@@ -10,12 +10,14 @@ import XCTest
 
 class NetworkClientTest: XCTestCase {
 
-    var sut: NetworkClientProtocol!
-    var storageMock = StorageManagerMock()
+    var sut: NetworkClient!
+    var storageMock: StorageManagerMock!
+    
     override func setUpWithError() throws {
         let config = URLSessionConfiguration.ephemeral
         config.protocolClasses = [MockURLProtocol.self]
         let urlSession = URLSession(configuration: config)
+        storageMock = StorageManagerMock()
         sut = NetworkClient(storageManager: storageMock, urlSession: urlSession)
     }
     
@@ -26,17 +28,19 @@ class NetworkClientTest: XCTestCase {
     //   Test the execution of requests
     func testNetworkClient_whenRequestInfoProvided_willReturnData(){
         let promise = expectation(description: "Test the execution of requests")
-        sut.getRequest(MockURL.url) { data in
+        sut.get(MockURL.getURL) { data in
             XCTAssertNotNil(data)
             promise.fulfill()
         }
         waitForExpectations(timeout: Double(1), handler: nil)
     }
     
+  
+    
     // Test the recording
     func testNetworkClient_WhenCreateARequest_ShouldSavedLocally() {
         let promise = expectation(description: "Test the recording")
-        sut.getRequest(MockURL.url) { _ in
+        sut.get(MockURL.getURL) { _ in
             // Assert
             XCTAssertEqual(self.storageMock.isSaveRecordCalled, true)
             promise.fulfill()

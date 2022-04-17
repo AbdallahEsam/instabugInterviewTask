@@ -7,7 +7,7 @@
 
 import Foundation
 public protocol NetworkClientProtocol {
-    func getRequest(_ url: URL, completionHandler: @escaping (Data?) -> Void)
+    func get(_ url: URL, completionHandler: @escaping (Data?) -> Void)
     func post(_ url: URL, payload: Data?, completionHandler: @escaping (Data?) -> Void)
     func put(_ url: URL, payload: Data?, completionHandler: @escaping (Data?) -> Void)
     func delete(_ url: URL, completionHandler: @escaping (Data?) -> Void)
@@ -15,8 +15,10 @@ public protocol NetworkClientProtocol {
 }
 
 public class NetworkClient {
+    
     private let storageManager: StorageManagerProtocol
     private var urlSession: URLSession
+    
     init(storageManager: StorageManagerProtocol, urlSession: URLSession) {
         self.storageManager = storageManager
         self.urlSession = urlSession
@@ -60,7 +62,7 @@ public class NetworkClient {
     /// - Note: Should not be used as the response happens asynchronously.
     ///
     @available(*, unavailable, renamed: "allNetworkRecords(onCompletion:)")
-    public func allNetworkRequests() -> Any {
+    public func allNetworkRequests() -> [Record] {
       fatalError("Not implemented")
     }
     
@@ -82,7 +84,7 @@ extension NetworkClient {
 }
 
 extension NetworkClient: NetworkClientProtocol {
-    public func getRequest(_ url: URL, completionHandler: @escaping (Data?) -> Void) {
+    public func get(_ url: URL, completionHandler: @escaping (Data?) -> Void) {
         executeRequest(url, method: "GET", payload: nil, completionHandler: completionHandler)
     }
     

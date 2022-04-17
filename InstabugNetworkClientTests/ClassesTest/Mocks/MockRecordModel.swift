@@ -11,7 +11,7 @@ class MockRecordModel {
     static func createRecord() -> RecordModel {
         return .init(creationDate: Date(),
                      method: "Get",
-                     url: MockURL.url.absoluteString,
+                     url: MockURL.getURL.absoluteString,
                      statusCode: 200,
                      requestPayload: "requestPayload",
                      responsePayload: "responsePayload",

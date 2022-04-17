@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import CoreData
 @testable import InstabugNetworkClient
 
 class StorageManagerTest: XCTestCase {
@@ -15,7 +16,7 @@ class StorageManagerTest: XCTestCase {
     var maxCount = 4
     override func setUpWithError() throws {
         coreDataStack = CoreDataTestStack()
-        sut = StorageManager(mainContext: coreDataStack.mainContext, maxCount: maxCount)
+        sut = StorageManager(type: .memory, maxCount: maxCount)
     }
     
     override func tearDownWithError() throws {
@@ -29,7 +30,7 @@ class StorageManagerTest: XCTestCase {
         sut.saveRecord(with: record) { result in
             switch result {
             case .success(let record):
-                XCTAssertEqual(record.url, MockURL.url.absoluteString)
+                XCTAssertEqual(record.url, MockURL.getURL.absoluteString)
             case .failure(_):
                 print("")
             }
