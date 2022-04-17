@@ -20,6 +20,13 @@ class ViewController: UIViewController {
         repo.get { [weak self] data in
             print(data)
         }
+        
+        DispatchQueue.main.async {
+            self.repo.get { [weak self] data in
+                print(data)
+            }
+            
+        }
     }
     
 

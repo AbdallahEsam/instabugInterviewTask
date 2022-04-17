@@ -12,10 +12,8 @@ import CoreData
 class StorageManagerTest: XCTestCase {
 
     var sut: StorageManagerProtocol!
-    var coreDataStack: CoreDataTestStack!
     var maxCount = 4
     override func setUpWithError() throws {
-        coreDataStack = CoreDataTestStack()
         sut = StorageManager(type: .memory, maxCount: maxCount)
     }
     
@@ -24,7 +22,7 @@ class StorageManagerTest: XCTestCase {
     }
     
    //    Test Save Record
-    func testStorageManager_SaveNewRecord_RecordURLEqualToStubURL() throws{
+    func testStorageManager_SaveNewRecord_RecordURLEqualToStubURL() {
         let promise = expectation(description: "Test Save Record")
         let record = MockRecordModel.createRecord()
         sut.saveRecord(with: record) { result in
@@ -41,8 +39,8 @@ class StorageManagerTest: XCTestCase {
     }
     
     
-    //    Test Save Record
-     func testStorageManager_whenRecordsMoreThanMaxSize_willRemoveFirstAndCountIsTheMax() throws{
+    //    Test Records More Than Max Size
+     func testStorageManager_whenRecordsMoreThanMaxSize_willRemoveFirstAndCountIsTheMax() {
          let promise = expectation(description: "Test Save Record")
          let record = MockRecordModel.createRecord()
          sut.saveRecord(with: record) { _ in}

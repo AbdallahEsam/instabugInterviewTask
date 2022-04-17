@@ -15,37 +15,49 @@ public protocol StorageManagerProtocol {
 }
 
 public final class StorageManager: StorageManagerProtocol {
+    // MARK: Contexts
     
     public static let shared = StorageManager()
     private let type: String
     private let maxCount: Int
+    
+    private lazy var persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: Defaults.coreDataName)
+        let description = container.persistentStoreDescriptions.first
+        description?.type = type
+        container.loadPersistentStores { storeDescription, error in
+            if let error = error {
+                let nserror = error as NSError
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                
+            }
+        }
+        return container
+    }()
+    /*
+     rootQueue to perform tasks in background thread
+     */
+    private let rootQueue: DispatchQueue = DispatchQueue(label: "com.instabug.session.rootQueue", qos: .background)
+
+    /*
+     Note: type is using for making data be is sqllite or memory.
+     maxCount are passed in so they can be overridden via unit testing.
+     */
     
     init(type: StorageManager.MemoryStorageType, maxCount: Int) {
         self.type = type.value
         self.maxCount = maxCount
     }
     
-    private lazy var persistentContainer: NSPersistentContainer = {
-           
-        let container = NSPersistentContainer(name: Defaults.coreDataName)
-        let description = container.persistentStoreDescriptions.first
-        description?.type = type
-           container.loadPersistentStores { storeDescription, error in
-               if let error = error {
-                   let nserror = error as NSError
-                   fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-                   
-               }
-           }
-           return container
-       }()
-
+   
+    /*
+     Note: private init for singelton
+     */
     private convenience init() {
         self.init(type: .disk, maxCount: Defaults.maxCount)
     }
     
     
-    private let rootQueue: DispatchQueue = DispatchQueue(label: "com.instabug.session.rootQueue", qos: .background)
     
     
      func performOnRootQueue(_ completion: (NSManagedObjectContext) -> Void) {
@@ -65,7 +77,7 @@ extension StorageManager {
             self.saveRecord(record, on: persistentContainer.viewContext, compeletion: compeletion)
         }
     }
-    
+   ///    create a record
     private func createRecordFromModel(_ viewContext: NSManagedObjectContext, _ record: RecordModel, compeletion: @escaping (Result<Record, Error>) -> Void) {
         let newItem = Record(context: viewContext)
         newItem.createAt = record.creationDate
@@ -78,6 +90,7 @@ extension StorageManager {
         compeletion(.success(newItem))
     }
     
+    ///    saveRecord
     private func saveRecord(_ record: RecordModel, on viewContext: NSManagedObjectContext, compeletion: @escaping (Result<Record, Error>) -> Void) {
         createRecordFromModel(viewContext, record, compeletion: compeletion)
         if viewContext.hasChanges {
@@ -90,7 +103,12 @@ extension StorageManager {
             }
         }
     }
-    
+    /*
+     Note: performPreInsertionRecord is called always before record new record for
+     get count of entity
+     check count
+     delete first item
+     */
     func performPreInsertionRecord(_ completion: () -> Void) {
         performOnRootQueue { viewContext in
             do {
@@ -108,6 +126,7 @@ extension StorageManager {
         }
     }
     
+    ///    deleteFirstItem
     private func deleteFirstItem(_ completion: (Error?) -> Void) {
         let request = Record.fetchRequest()
         request.fetchLimit = 1
@@ -133,7 +152,7 @@ extension StorageManager {
     public func resetAllRecords() {
         rootQueue.sync {
             let storeContainer =
-            CoreDataStack.shared.persistentContainer.persistentStoreCoordinator
+             persistentContainer.persistentStoreCoordinator
             
             // Delete each existing persistent store
             for store in storeContainer.persistentStores {
@@ -150,14 +169,14 @@ extension StorageManager {
             }
             
             // Re-create the persistent container
-            CoreDataStack.shared.persistentContainer = NSPersistentContainer(
+            persistentContainer = NSPersistentContainer(
                 name: Defaults.coreDataName // the name of
                 // a .xcdatamodeld file
             )
             
             // Calling loadPersistentStores will re-create the
             // persistent stores
-            CoreDataStack.shared.persistentContainer.loadPersistentStores {
+            persistentContainer.loadPersistentStores {
                 (store, error) in
                 // Handle errors
             }

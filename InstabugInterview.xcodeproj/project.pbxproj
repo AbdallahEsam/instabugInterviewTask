@@ -34,8 +34,6 @@
 		E295861C280B329C008CB903 /* NetworkClientTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295861B280B329C008CB903 /* NetworkClientTest.swift */; };
 		E295861E280B54AA008CB903 /* StorageManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295861D280B54AA008CB903 /* StorageManagerMock.swift */; };
 		E2958620280B7096008CB903 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295861F280B7096008CB903 /* MockURLProtocol.swift */; };
-		E2958622280B7A72008CB903 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2958621280B7A72008CB903 /* CoreDataStack.swift */; };
-		E2958624280B7B32008CB903 /* CoreDataTestStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2958623280B7B32008CB903 /* CoreDataTestStack.swift */; };
 		E2B07926280AA924008E48EE /* Record+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24C31E22809C7BE00539CA3 /* Record+CoreDataClass.swift */; };
 		E2B07927280AA924008E48EE /* Record+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24C31E32809C7BE00539CA3 /* Record+CoreDataProperties.swift */; };
 		E2B0792C280AB0CF008E48EE /* RequestRecordBuilderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B0792B280AB0CF008E48EE /* RequestRecordBuilderTest.swift */; };
@@ -112,8 +110,6 @@
 		E295861B280B329C008CB903 /* NetworkClientTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClientTest.swift; sourceTree = "<group>"; };
 		E295861D280B54AA008CB903 /* StorageManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManagerMock.swift; sourceTree = "<group>"; };
 		E295861F280B7096008CB903 /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
-		E2958621280B7A72008CB903 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
-		E2958623280B7B32008CB903 /* CoreDataTestStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataTestStack.swift; sourceTree = "<group>"; };
 		E2B0792B280AB0CF008E48EE /* RequestRecordBuilderTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestRecordBuilderTest.swift; sourceTree = "<group>"; };
 		E2B0792E280AB1F8008E48EE /* RequestStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestStub.swift; sourceTree = "<group>"; };
 		E2B07930280AB2A3008E48EE /* MockURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURL.swift; sourceTree = "<group>"; };
@@ -221,7 +217,6 @@
 				E24C31E32809C7BE00539CA3 /* Record+CoreDataProperties.swift */,
 				E24C31E92809C92500539CA3 /* RecordModel.swift */,
 				E24C31EC2809DDAB00539CA3 /* RequestRecordBuilder.swift */,
-				E2958621280B7A72008CB903 /* CoreDataStack.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -245,7 +240,6 @@
 				E2B0792B280AB0CF008E48EE /* RequestRecordBuilderTest.swift */,
 				E295861B280B329C008CB903 /* NetworkClientTest.swift */,
 				E2958613280B2979008CB903 /* StorageManagerTest.swift */,
-				E2958623280B7B32008CB903 /* CoreDataTestStack.swift */,
 			);
 			path = ClassesTest;
 			sourceTree = "<group>";
@@ -420,7 +414,6 @@
 				E24C31DD28090FB700539CA3 /* TODO File.swift in Sources */,
 				24AA93D925AF0F24007588C7 /* NetworkClient.swift in Sources */,
 				E24C31DA28090E9A00539CA3 /* Model.xcdatamodeld in Sources */,
-				E2958622280B7A72008CB903 /* CoreDataStack.swift in Sources */,
 				E2B07926280AA924008E48EE /* Record+CoreDataClass.swift in Sources */,
 				E2B07927280AA924008E48EE /* Record+CoreDataProperties.swift in Sources */,
 				E24C31EB2809C92500539CA3 /* RecordModel.swift in Sources */,
@@ -437,7 +430,6 @@
 				E2462CC7280ABAE800C881B6 /* ResposeStub.swift in Sources */,
 				E295861E280B54AA008CB903 /* StorageManagerMock.swift in Sources */,
 				E2B0792C280AB0CF008E48EE /* RequestRecordBuilderTest.swift in Sources */,
-				E2958624280B7B32008CB903 /* CoreDataTestStack.swift in Sources */,
 				E295861C280B329C008CB903 /* NetworkClientTest.swift in Sources */,
 				E2B0792F280AB1F8008E48EE /* RequestStub.swift in Sources */,
 				24AA93C825AF0F0D007588C7 /* InstabugNetworkClientTests.swift in Sources */,
