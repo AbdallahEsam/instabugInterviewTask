@@ -3,4 +3,148 @@
    uuid = "FB1A8B4F-E541-4777-8CEE-C3B8A25E9809"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C27D6658-D199-430A-9AD3-5415730A1FB5"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "InstabugNetworkClient/Storage/NewStorageManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "fetchAllRecords(completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "C27D6658-D199-430A-9AD3-5415730A1FB5 - 4c16a1f7601acebc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "InstabugNetworkClient.NewStorageManager.fetchAllRecords(completion: (Swift.Result&lt;Swift.Array&lt;InstabugNetworkClient.Record&gt;, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "InstabugNetworkClient"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macintosh/Desktop/task/InstabugInterview-2022/InstabugNetworkClient/Storage/NewStorageManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "50"
+                  endingLineNumber = "50"
+                  offsetFromSymbolStart = "375">
+               </Location>
+               <Location
+                  uuid = "C27D6658-D199-430A-9AD3-5415730A1FB5 - 4c16a1f7601acebc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "InstabugNetworkClient.NewStorageManager.fetchAllRecords(completion: (Swift.Result&lt;Swift.Array&lt;InstabugNetworkClient.Record&gt;, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "InstabugNetworkClient"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macintosh/Desktop/task/InstabugInterview-2022/InstabugNetworkClient/Storage/NewStorageManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "50"
+                  endingLineNumber = "50"
+                  offsetFromSymbolStart = "272">
+               </Location>
+               <Location
+                  uuid = "C27D6658-D199-430A-9AD3-5415730A1FB5 - 4c16a1f7601ace9d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "InstabugNetworkClient.NewStorageManager.fetchAllRecords(completion: (Swift.Result&lt;Swift.Array&lt;InstabugNetworkClient.Record&gt;, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "InstabugNetworkClient"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macintosh/Desktop/task/InstabugInterview-2022/InstabugNetworkClient/Storage/NewStorageManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "51"
+                  endingLineNumber = "51"
+                  offsetFromSymbolStart = "272">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3AB85EEA-B9DC-4AD0-9075-D1BF90C0E900"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "InstabugNetworkClient/Storage/NewStorageManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "fetchAllRecords(completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "3AB85EEA-B9DC-4AD0-9075-D1BF90C0E900 - 4c16a1f7601acec2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "InstabugNetworkClient.NewStorageManager.fetchAllRecords(completion: (Swift.Result&lt;Swift.Array&lt;InstabugNetworkClient.Record&gt;, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "InstabugNetworkClient"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macintosh/Desktop/task/InstabugInterview-2022/InstabugNetworkClient/Storage/NewStorageManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "52"
+                  endingLineNumber = "52"
+                  offsetFromSymbolStart = "472">
+               </Location>
+               <Location
+                  uuid = "3AB85EEA-B9DC-4AD0-9075-D1BF90C0E900 - 4c16a1f7601acec2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "InstabugNetworkClient.NewStorageManager.fetchAllRecords(completion: (Swift.Result&lt;Swift.Array&lt;InstabugNetworkClient.Record&gt;, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "InstabugNetworkClient"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macintosh/Desktop/task/InstabugInterview-2022/InstabugNetworkClient/Storage/NewStorageManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "52"
+                  endingLineNumber = "52"
+                  offsetFromSymbolStart = "375">
+               </Location>
+               <Location
+                  uuid = "3AB85EEA-B9DC-4AD0-9075-D1BF90C0E900 - 4c16a1f7601acd23"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "InstabugNetworkClient.NewStorageManager.fetchAllRecords(completion: (Swift.Result&lt;Swift.Array&lt;InstabugNetworkClient.Record&gt;, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "InstabugNetworkClient"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macintosh/Desktop/task/InstabugInterview-2022/InstabugNetworkClient/Storage/NewStorageManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "53"
+                  endingLineNumber = "53"
+                  offsetFromSymbolStart = "375">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D5A152B5-8A5D-4776-A6A2-CF51818E2168"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "InstabugNetworkClient/Storage/RecordManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "createRecord(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

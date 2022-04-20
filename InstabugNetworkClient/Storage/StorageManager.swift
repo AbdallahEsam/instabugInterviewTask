@@ -34,10 +34,15 @@ public final class StorageManager: StorageManagerProtocol {
         }
         return container
     }()
+    
+    private var backGroundContext: NSManagedObjectContext {
+        return persistentContainer.newBackgroundContext()
+    }
+
     /*
-     rootQueue to perform tasks in background thread
-     */
-    private let rootQueue: DispatchQueue = DispatchQueue(label: "com.instabug.session.rootQueue", qos: .background)
+//     rootQueue to perform tasks in background thread
+//     */
+//    private let rootQueue: DispatchQueue = DispatchQueue(label: "com.instabug.session.rootQueue", qos: .background)
 
     /*
      Note: type is using for making data be is sqllite or memory.
@@ -54,18 +59,13 @@ public final class StorageManager: StorageManagerProtocol {
      Note: private init for singelton
      */
     private convenience init() {
-        self.init(type: .disk, maxCount: Defaults.maxCount)
+        self.init(type: .disk, maxCount: 1000)
     }
     
     
     
     
-     func performOnRootQueue(_ completion: (NSManagedObjectContext) -> Void) {
-    
-         rootQueue.sync{
-             completion(persistentContainer.viewContext)
-        }
-    }
+     
 }
 
 // MARK: - Save Record
@@ -73,12 +73,17 @@ public final class StorageManager: StorageManagerProtocol {
 extension StorageManager {
     
     public func saveRecord(with record: RecordModel, compeletion: @escaping (Result<Record, Error>) -> Void) {
-        performPreInsertionRecord {
-            self.saveRecord(record, on: persistentContainer.viewContext, compeletion: compeletion)
+        performPreInsertionRecord{
+            self.backGroundContext.performAndWait {
+                self.saveRecord(record, on: self.backGroundContext, compeletion: compeletion)
+
+            }
         }
+        
+        
     }
    ///    create a record
-    private func createRecordFromModel(_ viewContext: NSManagedObjectContext, _ record: RecordModel, compeletion: @escaping (Result<Record, Error>) -> Void) {
+    private func createRecordFromModel(_ viewContext: NSManagedObjectContext, _ record: RecordModel, completion: @escaping (Result<Record, Error>) -> Void) {
         let newItem = Record(context: viewContext)
         newItem.createAt = record.creationDate
         newItem.errorDomain = record.errorDomain
@@ -87,12 +92,12 @@ extension StorageManager {
         newItem.responsePayload = record.responsePayload
         newItem.statusCode = Int64(record.statusCode ?? 200)
         newItem.url = record.url
-        compeletion(.success(newItem))
+        completion(.success(newItem))
     }
     
     ///    saveRecord
     private func saveRecord(_ record: RecordModel, on viewContext: NSManagedObjectContext, compeletion: @escaping (Result<Record, Error>) -> Void) {
-        createRecordFromModel(viewContext, record, compeletion: compeletion)
+        createRecordFromModel(viewContext, record, completion: compeletion)
         if viewContext.hasChanges {
             do {
                 try viewContext.save()
@@ -109,16 +114,16 @@ extension StorageManager {
      check count
      delete first item
      */
-    func performPreInsertionRecord(_ completion: () -> Void) {
-        performOnRootQueue { viewContext in
+    func performPreInsertionRecord(completion: @escaping () -> Void ) {
+        backGroundContext.performAndWait {
             do {
-                let count = try viewContext.count(for: Record.fetchRequest())
+                let count = try self.backGroundContext.count(for: Record.fetchRequest())
                 guard count < maxCount else {
-                    self.deleteFirstItem { _ in completion() }
+                    self.deleteFirstItem { _ in  completion() }
                     return
                 }
-                
                 completion()
+                
             } catch {
                 fatalError(error.localizedDescription)
             }
@@ -134,9 +139,7 @@ extension StorageManager {
         do {
             let items = try persistentContainer.viewContext.fetch(request) as [NSManagedObject]
             if let firstItem = items.first {
-                if let item = firstItem as? Record {
-                    print(item.statusCode)
-                }
+                
                 persistentContainer.viewContext.delete(firstItem)
             }
             
@@ -150,7 +153,7 @@ extension StorageManager {
 // MARK: - Reset All Records
 extension StorageManager {
     public func resetAllRecords() {
-        rootQueue.sync {
+        backGroundContext.performAndWait {
             let storeContainer =
              persistentContainer.persistentStoreCoordinator
             
@@ -189,7 +192,7 @@ extension StorageManager {
 extension StorageManager {
     
     public func fetchRecords(compeletion: @escaping (Result<[Record], Error>) -> Void) {
-        rootQueue.async { [weak self] in
+        backGroundContext.performAndWait { [weak self] in
             guard let self = self else{return}
             do {
                 

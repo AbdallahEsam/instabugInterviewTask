@@ -36,9 +36,9 @@ public class NetworkClient {
         
         urlSession.dataTask(with: urlRequest) { [weak self] data, response, error in
             guard let self = self else { return }
-            let response = Response(response: response, data: data, error: error)
-            self.saveRequest(urlRequest, response)
             DispatchQueue.main.async {
+                let response = Response(response: response, data: data, error: error)
+                self.saveRequest(urlRequest, response)
                 completionHandler(data)
             }
         }.resume()
