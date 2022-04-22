@@ -1,8 +1,8 @@
 //
-//  StorageManagerTest.swift
+//  RecordStorageStack.swift
 //  InstabugNetworkClientTests
 //
-//  Created by Macintosh on 16/04/2022.
+//  Created by Abdallah Essam on 16/04/2022.
 //
 
 import XCTest
@@ -11,10 +11,11 @@ import CoreData
 
 class StorageManagerTest: XCTestCase {
 
-    var sut: StorageManagerProtocol!
-    var maxCount = 4
+    var sut: RecordStorageStack!
+    var maxCount = 5
     override func setUpWithError() throws {
-        sut = StorageManager(type: .memory, maxCount: maxCount)
+        let recordManager = RecordManager(mainContext: CoreDataTestStack().mainContext, backgroundContext:  CoreDataTestStack().backgroundContext)
+        sut = RecordStorageStack(recordManager: recordManager, maxCount: maxCount)
     }
     
     override func tearDownWithError() throws {
@@ -25,7 +26,7 @@ class StorageManagerTest: XCTestCase {
     func testStorageManager_SaveNewRecord_RecordURLEqualToStubURL() {
         let promise = expectation(description: "Test Save Record")
         let record = MockRecordModel.createRecord()
-        sut.saveRecord(with: record) { result in
+        sut.pushRecord(with: record) { result in
             switch result {
             case .success(let record):
                 XCTAssertEqual(record.url, MockURL.getURL.absoluteString)
@@ -34,7 +35,7 @@ class StorageManagerTest: XCTestCase {
             }
             promise.fulfill()
         }
-        waitForExpectations(timeout: Double(1), handler: nil)
+        waitForExpectations(timeout: Double(20), handler: nil)
        
     }
     
@@ -43,22 +44,25 @@ class StorageManagerTest: XCTestCase {
      func testStorageManager_whenRecordsMoreThanMaxSize_willRemoveFirstAndCountIsTheMax() {
          let promise = expectation(description: "Test Save Record")
          let record = MockRecordModel.createRecord()
-         sut.saveRecord(with: record) { _ in}
-         sut.saveRecord(with: record) { _ in}
-         sut.saveRecord(with: record) { _ in}
-         sut.saveRecord(with: record) { _ in}
-         sut.saveRecord(with: record) { _ in}
+         sut.pushRecord(with: record) { _ in}
+         sut.pushRecord(with: record) { _ in}
+         sut.pushRecord(with: record) { _ in}
+         sut.pushRecord(with: record) { _ in}
+         sut.pushRecord(with: record) { _ in}
+
+         
+       
          sut.fetchRecords { [weak self] result in
              guard let self = self else{return}
              switch result {
              case .success(let records):
-                 XCTAssertEqual(records.count, self.maxCount)
+                 XCTAssertEqual(records!.count, self.maxCount)
              case .failure(_):
                  print("")
              }
              promise.fulfill()
          }
-         waitForExpectations(timeout: Double(1), handler: nil)
+         waitForExpectations(timeout: Double(20), handler: nil)
         
      }
     

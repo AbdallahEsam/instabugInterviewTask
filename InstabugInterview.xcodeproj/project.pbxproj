@@ -24,11 +24,14 @@
 		E24C31DA28090E9A00539CA3 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E24C31D728090E9A00539CA3 /* Model.xcdatamodeld */; };
 		E24C31DC28090FB700539CA3 /* TODO File.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24C31DB28090FB700539CA3 /* TODO File.swift */; };
 		E24C31DD28090FB700539CA3 /* TODO File.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24C31DB28090FB700539CA3 /* TODO File.swift */; };
-		E24C31E12809637400539CA3 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24C31DF2809637400539CA3 /* StorageManager.swift */; };
 		E24C31EB2809C92500539CA3 /* RecordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24C31E92809C92500539CA3 /* RecordModel.swift */; };
 		E24C31EE2809DDAB00539CA3 /* RequestRecordBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24C31EC2809DDAB00539CA3 /* RequestRecordBuilder.swift */; };
+		E27F2B192812585C00342F41 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27F2B162812585B00342F41 /* CoreDataStack.swift */; };
+		E27F2B1A2812585C00342F41 /* RecordStorageStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27F2B172812585C00342F41 /* RecordStorageStack.swift */; };
+		E27F2B1D2812589A00342F41 /* RecordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27F2B1C2812589A00342F41 /* RecordManager.swift */; };
+		E27F2B202812595A00342F41 /* CoreDataTestStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27F2B1E2812592D00342F41 /* CoreDataTestStack.swift */; };
 		E2958612280B27DE008CB903 /* MockRecordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2958611280B27DE008CB903 /* MockRecordModel.swift */; };
-		E2958614280B2979008CB903 /* StorageManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2958613280B2979008CB903 /* StorageManagerTest.swift */; };
+		E2958614280B2979008CB903 /* RecordStorageStackTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2958613280B2979008CB903 /* RecordStorageStackTest.swift */; };
 		E2958616280B2E8E008CB903 /* AppRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2958615280B2E8E008CB903 /* AppRepo.swift */; };
 		E2958618280B2F12008CB903 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2958617280B2F12008CB903 /* Constant.swift */; };
 		E295861C280B329C008CB903 /* NetworkClientTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295861B280B329C008CB903 /* NetworkClientTest.swift */; };
@@ -98,13 +101,16 @@
 		E2462CC6280ABAE800C881B6 /* ResposeStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResposeStub.swift; sourceTree = "<group>"; };
 		E24C31D828090E9A00539CA3 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		E24C31DB28090FB700539CA3 /* TODO File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TODO File.swift"; sourceTree = "<group>"; };
-		E24C31DF2809637400539CA3 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		E24C31E22809C7BE00539CA3 /* Record+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Record+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E24C31E32809C7BE00539CA3 /* Record+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Record+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E24C31E92809C92500539CA3 /* RecordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordModel.swift; sourceTree = "<group>"; };
 		E24C31EC2809DDAB00539CA3 /* RequestRecordBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestRecordBuilder.swift; sourceTree = "<group>"; };
+		E27F2B162812585B00342F41 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		E27F2B172812585C00342F41 /* RecordStorageStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordStorageStack.swift; sourceTree = "<group>"; };
+		E27F2B1C2812589A00342F41 /* RecordManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordManager.swift; sourceTree = "<group>"; };
+		E27F2B1E2812592D00342F41 /* CoreDataTestStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataTestStack.swift; sourceTree = "<group>"; };
 		E2958611280B27DE008CB903 /* MockRecordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRecordModel.swift; sourceTree = "<group>"; };
-		E2958613280B2979008CB903 /* StorageManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManagerTest.swift; sourceTree = "<group>"; };
+		E2958613280B2979008CB903 /* RecordStorageStackTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordStorageStackTest.swift; sourceTree = "<group>"; };
 		E2958615280B2E8E008CB903 /* AppRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRepo.swift; sourceTree = "<group>"; };
 		E2958617280B2F12008CB903 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		E295861B280B329C008CB903 /* NetworkClientTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClientTest.swift; sourceTree = "<group>"; };
@@ -205,7 +211,9 @@
 		E24C31DE2809636500539CA3 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
-				E24C31DF2809637400539CA3 /* StorageManager.swift */,
+				E27F2B1C2812589A00342F41 /* RecordManager.swift */,
+				E27F2B162812585B00342F41 /* CoreDataStack.swift */,
+				E27F2B172812585C00342F41 /* RecordStorageStack.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -224,6 +232,7 @@
 		E2958610280B27A3008CB903 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				E27F2B1E2812592D00342F41 /* CoreDataTestStack.swift */,
 				E2B07930280AB2A3008E48EE /* MockURL.swift */,
 				E2958611280B27DE008CB903 /* MockRecordModel.swift */,
 				E295861D280B54AA008CB903 /* StorageManagerMock.swift */,
@@ -239,7 +248,7 @@
 				E2B0792D280AB1B8008E48EE /* Stubs */,
 				E2B0792B280AB0CF008E48EE /* RequestRecordBuilderTest.swift */,
 				E295861B280B329C008CB903 /* NetworkClientTest.swift */,
-				E2958613280B2979008CB903 /* StorageManagerTest.swift */,
+				E2958613280B2979008CB903 /* RecordStorageStackTest.swift */,
 			);
 			path = ClassesTest;
 			sourceTree = "<group>";
@@ -414,11 +423,13 @@
 				E24C31DD28090FB700539CA3 /* TODO File.swift in Sources */,
 				24AA93D925AF0F24007588C7 /* NetworkClient.swift in Sources */,
 				E24C31DA28090E9A00539CA3 /* Model.xcdatamodeld in Sources */,
+				E27F2B192812585C00342F41 /* CoreDataStack.swift in Sources */,
 				E2B07926280AA924008E48EE /* Record+CoreDataClass.swift in Sources */,
+				E27F2B1A2812585C00342F41 /* RecordStorageStack.swift in Sources */,
+				E27F2B1D2812589A00342F41 /* RecordManager.swift in Sources */,
 				E2B07927280AA924008E48EE /* Record+CoreDataProperties.swift in Sources */,
 				E24C31EB2809C92500539CA3 /* RecordModel.swift in Sources */,
 				E24C31EE2809DDAB00539CA3 /* RequestRecordBuilder.swift in Sources */,
-				E24C31E12809637400539CA3 /* StorageManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,11 +441,12 @@
 				E2462CC7280ABAE800C881B6 /* ResposeStub.swift in Sources */,
 				E295861E280B54AA008CB903 /* StorageManagerMock.swift in Sources */,
 				E2B0792C280AB0CF008E48EE /* RequestRecordBuilderTest.swift in Sources */,
+				E27F2B202812595A00342F41 /* CoreDataTestStack.swift in Sources */,
 				E295861C280B329C008CB903 /* NetworkClientTest.swift in Sources */,
 				E2B0792F280AB1F8008E48EE /* RequestStub.swift in Sources */,
 				24AA93C825AF0F0D007588C7 /* InstabugNetworkClientTests.swift in Sources */,
 				E2958620280B7096008CB903 /* MockURLProtocol.swift in Sources */,
-				E2958614280B2979008CB903 /* StorageManagerTest.swift in Sources */,
+				E2958614280B2979008CB903 /* RecordStorageStackTest.swift in Sources */,
 				E2B07931280AB2A3008E48EE /* MockURL.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

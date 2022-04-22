@@ -2,13 +2,13 @@
 //  StorageManagerMock.swift
 //  InstabugNetworkClientTests
 //
-//  Created by Macintosh on 16/04/2022.
+//  Created by Abdallah Essam on 16/04/2022.
 //
 
 import Foundation
 @testable import InstabugNetworkClient
 
-class StorageManagerMock: StorageManagerProtocol {
+class StorageManagerMock: RecordStorageStackProtocol {
     
     
     var isSaveRecordCalled: Bool =  false
@@ -16,16 +16,16 @@ class StorageManagerMock: StorageManagerProtocol {
     var isResetAllRecordsCalled: Bool = false
    
     
-    func resetAllRecords() {
+    func reset() {
         isResetAllRecordsCalled = true
     }
     
-    func saveRecord(with record: RecordModel, compeletion: @escaping (Result<Record, Error>) -> Void) {
+    func pushRecord(with record: RecordModel, completion: @escaping (Result<Record, Error>) -> Void) {
         isSaveRecordCalled = true
     }
     
     
-    func fetchRecords(compeletion: @escaping (Result<[Record], Error>) -> Void) {
+    func fetchRecords(completion: @escaping (Result<[Record]?, Error>) -> Void) {
         isFetchRecordsCalled = true
 
     }

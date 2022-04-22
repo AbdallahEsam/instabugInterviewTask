@@ -11,21 +11,21 @@ public protocol NetworkClientProtocol {
     func post(_ url: URL, payload: Data?, completionHandler: @escaping (Data?) -> Void)
     func put(_ url: URL, payload: Data?, completionHandler: @escaping (Data?) -> Void)
     func delete(_ url: URL, completionHandler: @escaping (Data?) -> Void)
-    func allNetworkRecords(onCompletion: @escaping(Result<[Record], Error>) -> Void)
+    func allNetworkRecords(onCompletion: @escaping(Result<[Record]?, Error>) -> Void)
 }
 
 public class NetworkClient {
     
-    private let storageManager: StorageManagerProtocol
+    private let storageManager: RecordStorageStackProtocol
     private var urlSession: URLSession
     
-    init(storageManager: StorageManagerProtocol, urlSession: URLSession) {
+    init(storageManager: RecordStorageStackProtocol, urlSession: URLSession) {
         self.storageManager = storageManager
         self.urlSession = urlSession
     }
     
     public convenience init() {
-        self.init(storageManager: StorageManager.shared, urlSession: URLSession.shared)
+        self.init(storageManager: RecordStorageStack.shared, urlSession: URLSession.shared)
     }
     
     // MARK: Network requests
@@ -55,7 +55,7 @@ public class NetworkClient {
         }
 
         let requestRecord = recordBuilder.build()
-        self.storageManager.saveRecord(with: requestRecord) { _ in}
+        self.storageManager.pushRecord(with: requestRecord) { _ in}
     }
 
     // MARK: Network recording
@@ -66,10 +66,10 @@ public class NetworkClient {
       fatalError("Not implemented")
     }
     
-    /// Fetch all netwwork records
+    /// Fetch all network records
     ///
-    public func allNetworkRecords(onCompletion: @escaping(Result<[Record], Error>) -> Void) {
-        storageManager.fetchRecords(compeletion: onCompletion)
+    public func allNetworkRecords(onCompletion: @escaping(Result<[Record]?, Error>) -> Void) {
+        storageManager.fetchRecords(completion: onCompletion)
     }
 }
 

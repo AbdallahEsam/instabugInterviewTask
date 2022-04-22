@@ -2,7 +2,7 @@
 //  MokeRecordModel.swift
 //  InstabugNetworkClientTests
 //
-//  Created by Macintosh on 16/04/2022.
+//  Created by Abdallah Essam on 16/04/2022.
 //
 
 import Foundation
@@ -20,7 +20,7 @@ class MockRecordModel {
     
     static func createMaxRecords() -> [RecordModel] {
         var records: [RecordModel] = []
-        for _ in 0...StorageManager.Defaults.maxCount {
+        for _ in 0...CoreDataStack.Defaults.maxCount {
             records.append(MockRecordModel.createRecord())
         }
         return records

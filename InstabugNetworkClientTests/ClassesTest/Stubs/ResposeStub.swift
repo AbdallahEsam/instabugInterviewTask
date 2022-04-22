@@ -2,7 +2,7 @@
 //  ResposeStub.swift
 //  InstabugNetworkClientTests
 //
-//  Created by Macintosh on 16/04/2022.
+//  Created by Abdallah Essam on 16/04/2022.
 //
 
 import Foundation
